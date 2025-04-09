@@ -23,5 +23,4 @@ public class SimpleLight implements Light {
 	public boolean isOff() {
 		return this.state == OnOff.OFF;
 	}
-
 }

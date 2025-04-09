@@ -9,5 +9,4 @@ public interface Light {
 	
 	boolean isOn();
 	boolean isOff();
-
 }
