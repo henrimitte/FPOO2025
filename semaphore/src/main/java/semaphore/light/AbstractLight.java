@@ -1,6 +1,6 @@
 package semaphore.light;
 
-public class SimpleLight implements Light {
+public class AbstractLight implements Light {
 
 	private OnOff state = OnOff.OFF;
 
