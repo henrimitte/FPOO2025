@@ -21,7 +21,7 @@ class E27LightBulbTest {
 	@Test
 	void shouldTurnOff() {
 		TurnOnOff light = new E27LightBulb();
-		
+
 		light.turnOn();
 		light.turnOff();
 
