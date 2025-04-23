@@ -67,17 +67,20 @@ class SpotLightTest {
 		// given
 		SpotLight spot = new SpotLight(null);
 		spot.setLight(new E27LightBulb());
-		final int width = 50;
-		final int height = 20;
-		spot.setDimension(new Dimension(width, height));
+		final int originalWidth = 50;
+		final int originalHeight = 20;
+		spot.setDimension(new Dimension(originalWidth, originalHeight));
 
 		// do action
 		Dimension dimension = spot.getDimension();
 		dimension.setSize(30, 30);
 
 		// check
-		assertEquals(width, spot.getDimension().getWidth());
-		assertEquals(height, spot.getDimension().getHeight());
+		
+		int currentWidth = (int) spot.getDimension().getWidth();
+		int currentHeight = (int) spot.getDimension().getHeight();
+		assertEquals(originalWidth, currentWidth);
+		assertEquals(originalHeight, currentHeight);
 	}
 
 }
