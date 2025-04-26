@@ -1,24 +1,28 @@
 package semaphore.spot;
 
 import semaphore.util.TurnOnOff;
+import semaphore.util.gui.Paintable;
 
 import java.awt.Dimension;
+import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Point;
 
-import semaphore.light.Light;
+import semaphore.light.AbstractLight;
 import semaphore.light.e27.AbstractLightE27;
 
-public class SpotLight implements TurnOnOff {
+public class SpotLight implements TurnOnOff, Paintable {
 
 	private Point position = new Point(0, 0);
 	private Dimension dimension = new Dimension(20, 20);
 
-	private Light light;
-	private Image mask;
+	private AbstractLight light;
+	private Image maskOn;
+	private Image maskOff;
 
-	public SpotLight(Image mask) {
-		this.mask = mask;
+	public SpotLight(Image maskOn, Image maskOff) {
+		this.maskOn = maskOn;
+		this.maskOff = maskOff;
 	}
 
 	public void setPosition(int xLeft, int yTop) {
@@ -65,4 +69,16 @@ public class SpotLight implements TurnOnOff {
 		return this.light.isOff();
 	}
 
+	@Override
+	public void paint(Graphics g) {
+		int xLeft = position.x;
+		int yTop = position.y;
+		int width = dimension.width;
+		int height = dimension.height;
+
+		if (isOn())
+			g.drawImage(maskOn, xLeft, yTop, width, height, null);
+		else
+			g.drawImage(maskOff, xLeft, yTop, width, height, null);
+	}
 }
