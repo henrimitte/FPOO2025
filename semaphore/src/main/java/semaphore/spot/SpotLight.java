@@ -1,8 +1,5 @@
 package semaphore.spot;
 
-import semaphore.util.TurnOnOff;
-import semaphore.util.gui.Paintable;
-
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
@@ -10,6 +7,8 @@ import java.awt.Point;
 
 import semaphore.light.AbstractLight;
 import semaphore.light.e27.AbstractLightE27;
+import semaphore.util.TurnOnOff;
+import semaphore.util.gui.Paintable;
 
 public class SpotLight implements TurnOnOff, Paintable {
 

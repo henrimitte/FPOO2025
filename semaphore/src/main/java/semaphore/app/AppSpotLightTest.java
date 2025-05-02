@@ -2,11 +2,11 @@ package semaphore.app;
 
 import java.awt.Image;
 import java.io.IOException;
-
-import javax.imageio.ImageIO;
 import java.net.URL;
 import java.util.Timer;
 import java.util.TimerTask;
+
+import javax.imageio.ImageIO;
 
 import semaphore.light.e27.E27LightBulb;
 import semaphore.spot.SpotLight;

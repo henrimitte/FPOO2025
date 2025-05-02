@@ -1,10 +1,15 @@
 package semaphore.util.gui;
 
-import java.awt.*;
-import java.util.*;
+import java.awt.Dimension;
+import java.awt.Graphics;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.Timer;
+import java.util.TimerTask;
 
-import javax.swing.*;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 
 public class MyWindow {
 	private JFrame frame = new JFrame();
