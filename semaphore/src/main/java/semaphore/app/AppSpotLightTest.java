@@ -10,6 +10,10 @@ import javax.imageio.ImageIO;
 
 import semaphore.light.e27.E27LightBulb;
 import semaphore.spot.SpotLight;
+import semaphore.trafficLight.TrafficLight;
+import semaphore.trafficLight.control.SimpleTrafficLightControl;
+import semaphore.trafficLight.control.TrafficLightControl;
+import semaphore.trafficLight.simple.SimpleTrafficLight;
 import semaphore.util.gui.MyWindow;
 
 public class AppSpotLightTest {
@@ -19,10 +23,7 @@ public class AppSpotLightTest {
 		app.go();
 	}
 
-	private SpotLight createSpotLight(String color,
-									  int xLeft, int yTop,
-									  int width, int height
-									  ) throws IOException {
+	private SpotLight createSpotLight(String color, int xLeft, int yTop, int width, int height) throws IOException {
 		String path = "/semaphore/trafficLight/simple/img/";
 		URL url;
 
