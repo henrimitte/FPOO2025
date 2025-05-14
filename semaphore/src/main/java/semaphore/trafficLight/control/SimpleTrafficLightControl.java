@@ -9,12 +9,18 @@ import semaphore.util.TurnOnOff;
 public class SimpleTrafficLightControl implements TrafficLightControl {
 
 	private final TrafficLight trafficLight;
+	private final TurnOnOff green, yellow, red;
+
 	private State state = State.OFF;
 
-	private Timer timer;
+	private Timer timer = null;
 
 	public SimpleTrafficLightControl(TrafficLight trafficLight) {
 		this.trafficLight = trafficLight;
+
+		this.green = trafficLight.spotGreen();
+		this.yellow = trafficLight.spotYellow();
+		this.red = trafficLight.spotRed();
 	}
 
 	@Override
@@ -23,54 +29,41 @@ public class SimpleTrafficLightControl implements TrafficLightControl {
 		if (this.state == State.ALERT)
 			return;
 
-		TurnOnOff yellow = this.trafficLight.spotYellow();
-
-		this.turnOff();
-
-		this.configureAlert(yellow, 1_000);
+		this.reset();
+		this.configureAlert(this.yellow, 1_000);
 		this.state = State.ALERT;
 	}
 
 	@Override
 	public void turnGreen() {
-		this.turnOff();
-		this.trafficLight.spotGreen().turnOn();
-
+		this.reset();
+		this.green.turnOn();
 		this.state = State.GREEN;
 	}
 
 	@Override
 	public void turnYellow() {
-		this.turnOff();
-		this.trafficLight.spotYellow().turnOn();
-
+		this.reset();
+		this.yellow.turnOn();
 		this.state = State.YELLOW;
 	}
 
 	@Override
 	public void turnRed() {
-		this.turnOff();
-		this.trafficLight.spotRed().turnOn();
-
+		this.reset();
+		this.red.turnOn();
 		this.state = State.RED;
 	}
 
 	@Override
 	public void turnOff() {
-
-		this.stopAlert();
-
-		this.trafficLight.spotGreen().turnOff();
-		this.trafficLight.spotYellow().turnOff();
-		this.trafficLight.spotRed().turnOff();
-
-		this.state = State.OFF;
+		this.reset();
 	}
 
 	private void configureAlert(TurnOnOff spot, long delayMillis) {
 
-		this.turnOff();
-		
+		this.reset();
+
 		TimerTask task = new TimerTask() {
 
 			@Override
@@ -88,7 +81,21 @@ public class SimpleTrafficLightControl implements TrafficLightControl {
 	}
 
 	private void stopAlert() {
-		if (this.state == State.ALERT)
+		if (this.timer != null)
 			this.timer.cancel();
+
+		this.yellow.turnOff();
+	}
+
+	private void reset() {
+
+		if (this.state == State.ALERT)
+			this.stopAlert();
+
+		this.green.turnOff();
+		this.yellow.turnOff();
+		this.red.turnOff();
+
+		this.state = State.OFF;
 	}
 }
