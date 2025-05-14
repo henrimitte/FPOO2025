@@ -8,8 +8,9 @@ import semaphore.util.TurnOnOff;
 
 public class SimpleTrafficLightControl implements TrafficLightControl {
 
-	final TrafficLight trafficLight;
-	State state = State.OFF;
+	private final TrafficLight trafficLight;
+	private State state = State.OFF;
+
 	private Timer timer;
 
 	public SimpleTrafficLightControl(TrafficLight trafficLight) {
@@ -18,13 +19,16 @@ public class SimpleTrafficLightControl implements TrafficLightControl {
 
 	@Override
 	public void turnAlert() {
+
+		if (this.state == State.ALERT)
+			return;
+
 		TurnOnOff yellow = this.trafficLight.spotYellow();
 
 		this.turnOff();
 
+		this.configureAlert(yellow, 1_000);
 		this.state = State.ALERT;
-
-		configureAlert(yellow, 1_000);
 	}
 
 	@Override
@@ -54,8 +58,7 @@ public class SimpleTrafficLightControl implements TrafficLightControl {
 	@Override
 	public void turnOff() {
 
-		if (this.state == State.ALERT)
-			this.stopAlert();
+		this.stopAlert();
 
 		this.trafficLight.spotGreen().turnOff();
 		this.trafficLight.spotYellow().turnOff();
@@ -66,6 +69,8 @@ public class SimpleTrafficLightControl implements TrafficLightControl {
 
 	private void configureAlert(TurnOnOff spot, long delayMillis) {
 
+		this.turnOff();
+		
 		TimerTask task = new TimerTask() {
 
 			@Override
@@ -78,7 +83,7 @@ public class SimpleTrafficLightControl implements TrafficLightControl {
 			}
 		};
 
-		timer = new Timer();
+		this.timer = new Timer();
 		this.timer.scheduleAtFixedRate(task, 0, delayMillis);
 	}
 
